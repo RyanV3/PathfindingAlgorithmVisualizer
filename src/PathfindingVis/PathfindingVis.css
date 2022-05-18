@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 .grid {
     margin-top: 150px;
 }
@@ -78,3 +79,42 @@
     font-size: 18px;
     width: 25%;
 }
+=======
+.grid {
+    margin: 100px 0 0;
+}
+
+#banner {
+    position: absolute;
+    top: 0px;
+    left: 0px; 
+    width: 100%;
+    padding: 30px;
+    background-color: #90dbf1cc;
+}
+
+.button {
+    border: 1px solid black;
+    border-radius: 6px;
+    margin: 0px 5px;
+    padding: 10px 25px;
+    font-size: 18px;
+    cursor: pointer;
+}
+.button:active{
+    transform: scale(0.96);
+}
+
+.reset-button {
+    position: absolute;
+    left: 30px;
+    border: 1px solid black;
+    border-radius: 6px;
+    padding: 10px 25px;
+    font-size: 18px;
+    cursor: pointer;
+}
+.reset-button:active{
+    transform: scale(0.96);
+}
+>>>>>>> 44a2c2f16cc4e66cb61c5ca79cf5fa0b76d3a251

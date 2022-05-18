@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
@@ -68,3 +69,12 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+=======
+# PathfindingAlgorithmVisualizer
+
+Project based on Clement Mihailescu's Pathfinding Visualizer Tutorial.
+
+I thought the concept was very interesting and visually stunning, so I wanted to create it for myself. 
+I also want to add on a bit more functionality by improving the overall look of the page and adding 
+several other pathfinding algorithms to visualize. This project has been a very fun way to learn React.
+>>>>>>> 44a2c2f16cc4e66cb61c5ca79cf5fa0b76d3a251
