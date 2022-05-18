@@ -4,10 +4,10 @@ import {dijkstra, getNodesInShortestPathOrder} from '../algorithms/dijkstra';
 
 import './PathfindingVis.css';
 
-const START_NODE_ROW = 10;
-const START_NODE_COL = 15;
-const FINISH_NODE_ROW = 10;
-const FINISH_NODE_COL = 35;
+var START_NODE_ROW;
+var START_NODE_COL;
+var FINISH_NODE_ROW;
+var FINISH_NODE_COL;
 
 export default class PathfindingVis extends Component {
   constructor() {
@@ -24,8 +24,10 @@ export default class PathfindingVis extends Component {
   }
 
   handleMouseDown(row, col) {
-    const newGrid = getNewGridWithWalls(this.state.grid, row, col);
-    this.setState({grid: newGrid, mouseIsPressed: true});
+    if (!(row === START_NODE_ROW && col === START_NODE_COL) && !(row === FINISH_NODE_ROW && col === FINISH_NODE_COL)) {
+      const newGrid = getNewGridWithWalls(this.state.grid, row, col);
+      this.setState({grid: newGrid, mouseIsPressed: true});
+    }
   }
 
   handleMouseEnter(row, col) {
@@ -70,12 +72,24 @@ export default class PathfindingVis extends Component {
   }
 
   visualizeDijkstra() {
-    const {grid} = this.state;
-    const startNode = grid[START_NODE_ROW][START_NODE_COL];
-    const finishNode = grid[FINISH_NODE_ROW][FINISH_NODE_COL];
-    const visitedNodesInOrder = dijkstra(grid, startNode, finishNode);
-    const nodesInShortestPathOrder = getNodesInShortestPathOrder(finishNode);
-    this.animateDijkstra(visitedNodesInOrder, nodesInShortestPathOrder);
+    if (START_NODE_ROW && START_NODE_COL && FINISH_NODE_ROW && FINISH_NODE_COL) {
+      const {grid} = this.state;
+      const startNode = grid[START_NODE_ROW][START_NODE_COL];
+      const finishNode = grid[FINISH_NODE_ROW][FINISH_NODE_COL];
+      const visitedNodesInOrder = dijkstra(grid, startNode, finishNode);
+      const nodesInShortestPathOrder = getNodesInShortestPathOrder(finishNode);
+      this.animateDijkstra(visitedNodesInOrder, nodesInShortestPathOrder);
+    }
+  }
+
+  setStartAndFinish() {
+    START_NODE_ROW = document.getElementById('start-node-row').value-1;
+    START_NODE_COL = document.getElementById('start-node-col').value-1;
+    FINISH_NODE_ROW = document.getElementById('end-node-row').value-1;
+    FINISH_NODE_COL = document.getElementById('end-node-col').value-1;
+
+    document.getElementById(`node-${START_NODE_ROW}-${START_NODE_COL}`).className = 'node startNode';
+    document.getElementById(`node-${FINISH_NODE_ROW}-${FINISH_NODE_COL}`).className = 'node finishNode';
   }
 
   render() {
@@ -89,6 +103,23 @@ export default class PathfindingVis extends Component {
           </button>
           <button class="reset-button" onClick={() => this.refreshPage()}>
             Reset
+          </button>
+          <div class="node-input-cont">
+            End Node<br></br>
+            <label for="end-node-row">row</label>
+            <input type="number" id="end-node-row" min="1" max="20"></input>
+            <label for="end-node-col">col</label>
+            <input type="number" id="end-node-col" min="1" max="50"></input>
+          </div>
+          <div class="node-input-cont">
+            Start Node<br></br>
+            <label for="end-node-row">row</label>
+            <input type="number" id="start-node-row" min="1" max="20"></input>
+            <label for="end-node-col">col</label>
+            <input type="number" id="start-node-col" min="1" max="50"></input>
+          </div>
+          <button class="set-start-end" onClick={() => this.setStartAndFinish()}>
+            Set
           </button>
         </div>
         <div className="grid">
