@@ -72,7 +72,8 @@ export default class PathfindingVis extends Component {
   }
 
   visualizeDijkstra() {
-    if (START_NODE_ROW && START_NODE_COL && FINISH_NODE_ROW && FINISH_NODE_COL) {
+    if ((typeof START_NODE_ROW !== 'undefined') && (typeof START_NODE_COL !== 'undefined') && 
+        (typeof FINISH_NODE_ROW !== 'undefined') && (typeof FINISH_NODE_COL !== 'undefined')) {
       const {grid} = this.state;
       const startNode = grid[START_NODE_ROW][START_NODE_COL];
       const finishNode = grid[FINISH_NODE_ROW][FINISH_NODE_COL];
@@ -83,14 +84,40 @@ export default class PathfindingVis extends Component {
   }
 
   setStartAndFinish() {
-    START_NODE_ROW = document.getElementById('start-node-row').value-1;
-    START_NODE_COL = document.getElementById('start-node-col').value-1;
-    FINISH_NODE_ROW = document.getElementById('end-node-row').value-1;
-    FINISH_NODE_COL = document.getElementById('end-node-col').value-1;
+    const {grid} = this.state;
 
-    document.getElementById(`node-${START_NODE_ROW}-${START_NODE_COL}`).className = 'node startNode';
-    document.getElementById(`node-${FINISH_NODE_ROW}-${FINISH_NODE_COL}`).className = 'node finishNode';
+    if ((typeof START_NODE_ROW !== 'undefined') && (typeof START_NODE_COL !== 'undefined') && 
+        (typeof FINISH_NODE_ROW !== 'undefined') && (typeof FINISH_NODE_COL !== 'undefined')){
+      document.getElementById(`node-${START_NODE_ROW}-${START_NODE_COL}`).className = 'node';
+      document.getElementById(`node-${FINISH_NODE_ROW}-${FINISH_NODE_COL}`).className = 'node';
+    }
+
+    if (document.getElementById('start-node-row').value && document.getElementById('start-node-col').value && 
+        document.getElementById('end-node-row').value && document.getElementById('end-node-col').value){
+      START_NODE_ROW = document.getElementById('start-node-row').value-1;
+      START_NODE_COL = document.getElementById('start-node-col').value-1;
+      FINISH_NODE_ROW = document.getElementById('end-node-row').value-1;
+      FINISH_NODE_COL = document.getElementById('end-node-col').value-1;
+
+      grid[START_NODE_ROW][START_NODE_COL].isWall = false;
+      grid[FINISH_NODE_ROW][FINISH_NODE_COL].isWall = false;
+      document.getElementById(`node-${START_NODE_ROW}-${START_NODE_COL}`).className = 'node startNode';
+      document.getElementById(`node-${FINISH_NODE_ROW}-${FINISH_NODE_COL}`).className = 'node finishNode';
+
+      //this.clearVisitedNodes(grid, START_NODE_ROW, START_NODE_COL, FINISH_NODE_ROW, FINISH_NODE_COL);
+    }
   }
+
+  /*clearVisitedNodes(grid, START_NODE_ROW, START_NODE_COL, FINISH_NODE_ROW, FINISH_NODE_COL) {
+    for (let i = 0; i < grid[0].length-1; i++) {
+      for (let j = 0; j < grid.length-1; j++) {
+        grid[i][j].isVisited = false;
+        if (!((i === START_NODE_ROW) && (j === START_NODE_COL)) && !((i === FINISH_NODE_ROW) && (j === FINISH_NODE_COL))) {
+          document.getElementById(`node-${i}-${j}`).className = 'node';
+        }
+      }
+    }
+  }*/
 
   render() {
     const {grid, mouseIsPressed} = this.state;
@@ -170,8 +197,8 @@ const createNode = (col, row) => {
   return {
     col,
     row,
-    isStart: row === START_NODE_ROW && col === START_NODE_COL,
-    isFinish: row === FINISH_NODE_ROW && col === FINISH_NODE_COL,
+    isStart: false,
+    isFinish: false,
     distance: Infinity,
     isVisited: false,
     isWall: false,
