@@ -86,10 +86,8 @@ export default class PathfindingVis extends Component {
   setStartAndFinish() {
     const {grid} = this.state;
 
-    if ((typeof START_NODE_ROW !== 'undefined') && (typeof START_NODE_COL !== 'undefined') && 
-        (typeof FINISH_NODE_ROW !== 'undefined') && (typeof FINISH_NODE_COL !== 'undefined')){
-      document.getElementById(`node-${START_NODE_ROW}-${START_NODE_COL}`).className = 'node';
-      document.getElementById(`node-${FINISH_NODE_ROW}-${FINISH_NODE_COL}`).className = 'node';
+    if ((typeof START_NODE_ROW !== 'undefined')){
+      return;
     }
 
     if (document.getElementById('start-node-row').value && document.getElementById('start-node-col').value && 
@@ -104,14 +102,15 @@ export default class PathfindingVis extends Component {
       document.getElementById(`node-${START_NODE_ROW}-${START_NODE_COL}`).className = 'node startNode';
       document.getElementById(`node-${FINISH_NODE_ROW}-${FINISH_NODE_COL}`).className = 'node finishNode';
 
-      //this.clearVisitedNodes(grid, START_NODE_ROW, START_NODE_COL, FINISH_NODE_ROW, FINISH_NODE_COL);
+      //this.clearVisitedNodes(START_NODE_ROW, START_NODE_COL, FINISH_NODE_ROW, FINISH_NODE_COL);
     }
   }
 
-  /*clearVisitedNodes(grid, START_NODE_ROW, START_NODE_COL, FINISH_NODE_ROW, FINISH_NODE_COL) {
+  /*clearVisitedNodes(START_NODE_ROW, START_NODE_COL, FINISH_NODE_ROW, FINISH_NODE_COL) {
+    const {grid} = this.state;
+
     for (let i = 0; i < grid[0].length-1; i++) {
       for (let j = 0; j < grid.length-1; j++) {
-        grid[i][j].isVisited = false;
         if (!((i === START_NODE_ROW) && (j === START_NODE_COL)) && !((i === FINISH_NODE_ROW) && (j === FINISH_NODE_COL))) {
           document.getElementById(`node-${i}-${j}`).className = 'node';
         }
